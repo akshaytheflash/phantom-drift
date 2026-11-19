@@ -1,0 +1,7 @@
+{
+  "name": "phantom-example-benign",
+  "private": true,
+  "type": "module",
+  "description": "A stable toy MCP server used to show a clean phantom report.",
+  "main": "server.mjs"
+}

@@ -1,0 +1,65 @@
+{
+  "name": "phantom-drift",
+  "version": "0.1.2",
+  "description": "MCP prompt ledger and drift detector for coding agents: signed observations of every server instruction, tool description and prompt, marker-aware drift classes, and taint that survives sessions.",
+  "license": "MIT",
+  "author": "Akshay",
+  "type": "module",
+  "engines": {
+    "node": ">=20.10.0"
+  },
+  "bin": {
+    "phantom": "./dist/cli.js",
+    "phantom-drift": "./dist/cli.js"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "examples",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepublishOnly": "npm run build && npm test"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "ai-agents",
+    "security",
+    "prompt-injection",
+    "supply-chain",
+    "coding-agents",
+    "opencode",
+    "claude-code"
+  ],
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.2",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/akshaytheflash/phantom-drift.git"
+  },
+  "bugs": {
+    "url": "https://github.com/akshaytheflash/phantom-drift/issues"
+  },
+  "homepage": "https://github.com/akshaytheflash/phantom-drift#readme"
+}

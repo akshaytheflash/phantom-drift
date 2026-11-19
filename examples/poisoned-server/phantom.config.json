@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "poisoned": {
+      "command": "node",
+      "args": ["server.mjs"],
+      "cwd": "."
+    }
+  }
+}

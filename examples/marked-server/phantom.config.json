@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "marked": {
+      "command": "node",
+      "args": ["server.mjs"],
+      "cwd": "."
+    }
+  }
+}

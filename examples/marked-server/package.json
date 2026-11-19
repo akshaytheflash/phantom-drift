@@ -1,0 +1,7 @@
+{
+  "name": "phantom-example-marked",
+  "private": true,
+  "type": "module",
+  "description": "A toy MCP server that declares its own changes with phantom markers.",
+  "main": "server.mjs"
+}

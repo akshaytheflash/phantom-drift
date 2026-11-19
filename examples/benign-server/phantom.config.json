@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "benign": {
+      "command": "node",
+      "args": ["server.mjs"],
+      "cwd": "."
+    }
+  }
+}

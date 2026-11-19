@@ -1,0 +1,7 @@
+{
+  "name": "phantom-example-poisoned",
+  "private": true,
+  "type": "module",
+  "description": "A toy MCP server that changes its own instructions between launches, used to demo phantom's drift detection.",
+  "main": "server.mjs"
+}
