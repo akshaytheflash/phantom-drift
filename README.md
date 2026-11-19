@@ -249,7 +249,7 @@ usable in CI without spawning a server: feed them two snapshots from any source 
 ```bash
 npm install
 npm run typecheck
-npm test          # 190+ tests, including the real child process path
+npm test          # 194 tests, including the real child process path
 npm run build
 ```
 
