@@ -11,6 +11,7 @@ import {
   createService,
   ledgerFor,
   markTaint,
+  normalizeLedgerError,
   observeServer,
   summariseServer,
   verifyLedger
@@ -365,5 +366,32 @@ describe("CLI metadata", () => {
     };
     const output = execFileSync(process.execPath, [cli, "--version"], { encoding: "utf8" }).trim();
     expect(output).toBe(manifest.version);
+  });
+});
+
+describe("tamper reporting", () => {
+  it("normalises ledger errors so the position is not repeated", () => {
+    expect(normalizeLedgerError("ledger /x/a.jsonl failed verification at seq 4")).toBe(
+      "an entry does not match its mac"
+    );
+    expect(normalizeLedgerError("ledger /x/a.jsonl is corrupt at line 2: not JSON")).toBe(
+      "an entry is not valid JSON"
+    );
+    expect(normalizeLedgerError("ledger /x/a.jsonl is out of order at line 3: expected seq 2, found 5")).toBe(
+      "entries are out of order"
+    );
+  });
+
+  it("reports the sequence number separately from the reason", async () => {
+    const svc = service();
+    await observeServer(svc, server(SAFE));
+    await observeServer(svc, server({ TOY_INSTRUCTIONS: "Second." }));
+    const path = ledgerFor(svc, "notes").path;
+    const lines = readFileSync(path, "utf8").trim().split("\n");
+    const record = JSON.parse(lines[1] as string);
+    record.body.observation.instructions = "edited";
+    lines[1] = JSON.stringify(record);
+    writeFileSync(path, `${lines.join("\n")}\n`);
+    expect(verifyLedger(svc, "notes")).toMatchObject({ ok: false, brokenAt: 1, reason: "an entry does not match its mac" });
   });
 });

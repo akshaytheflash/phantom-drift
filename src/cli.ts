@@ -345,7 +345,7 @@ async function dispatch(
       } else if (result.brokenAt === null) {
         err(`tampered: ${result.reason ?? "unknown"} in ${result.ledgerPath}`);
       } else {
-        err(`tampered: ${result.reason ?? "unknown"} at seq ${result.brokenAt} in ${result.ledgerPath}`);
+        err(`tampered: seq ${result.brokenAt}: ${result.reason ?? "unknown"} in ${result.ledgerPath}`);
       }
       return output.result(result.ok ? 0 : 1);
     }

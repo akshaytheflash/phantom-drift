@@ -175,6 +175,26 @@ export interface VerifyResult {
 }
 
 /**
+ * Turns a store error into a reason that does not repeat the file path or the
+ * position, both of which the caller already reports.
+ */
+export function normalizeLedgerError(message: string): string {
+  if (/is corrupt at line \d+: not JSON/.test(message)) {
+    return "an entry is not valid JSON";
+  }
+  if (/is corrupt at line \d+: missing seq, mac or body/.test(message)) {
+    return "an entry is missing its seq, mac or body";
+  }
+  if (/is out of order at line \d+/.test(message)) {
+    return "entries are out of order";
+  }
+  if (/failed verification at seq \d+/.test(message)) {
+    return "an entry does not match its mac";
+  }
+  return message.replace(/^ledger \S+ /, "");
+}
+
+/**
  * Verifies a ledger without throwing. A file that cannot be parsed or whose
  * chain does not verify is a finding, not an exception: the caller asked
  * whether the ledger is intact, and the answer is no.
@@ -194,9 +214,9 @@ export function verifyLedger(service: ServiceOptions, server: string): VerifyRes
         ledgerPath: path,
         entries: 0,
         brokenAt: brokenAt === null ? (line === null ? null : Number(line[1]) - 1) : Number(brokenAt[1]),
-        reason: error.message.replace(/^ledger .*? is (corrupt|out of order).*$/, (_, kind: string) =>
-          kind === "corrupt" ? "an entry is not valid JSON or is missing fields" : "entries are out of order"
-        )
+        // The message names the position itself, so it is reported as the
+        // reason without a second "at seq" added by the caller.
+        reason: normalizeLedgerError(error.message)
       };
     }
     throw error;
@@ -208,7 +228,7 @@ export function verifyLedger(service: ServiceOptions, server: string): VerifyRes
     ledgerPath: ledger.path,
     entries: result.length,
     brokenAt: result.brokenAt,
-    reason: result.reason
+    reason: result.reason === null ? null : normalizeLedgerError(result.reason)
   };
 }
 
