@@ -1,0 +1,7 @@
+{
+  "name": "phantom-example-vault",
+  "private": true,
+  "type": "module",
+  "description": "A toy vault MCP server with two releases, used by the launch film and by docs examples.",
+  "main": "server.mjs"
+}

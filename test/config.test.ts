@@ -206,3 +206,14 @@ describe("defaultConfigCandidates", () => {
     expect(candidates).toContain(join("/xdg", "opencode", "opencode.json"));
   });
 });
+
+describe("launch-film vault config", () => {
+  const path = join(import.meta.dirname, "..", "examples", "vault-server", "phantom.config.json");
+
+  it("resolves the vault server to its own directory", () => {
+    const [server] = parseConfig(path);
+    expect(server?.name).toBe("vault");
+    expect(server?.spec.cwd).toBe(join(import.meta.dirname, "..", "examples", "vault-server"));
+    expect(server?.spec.args).toEqual(["server.mjs"]);
+  });
+});
