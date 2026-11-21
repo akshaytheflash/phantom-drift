@@ -1,6 +1,6 @@
 {
   "name": "phantom-drift",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "MCP prompt ledger and drift detector for coding agents: signed observations of every server instruction, tool description and prompt, marker-aware drift classes, and taint that survives sessions.",
   "license": "MIT",
   "author": "Akshay",

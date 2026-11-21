@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.1.4
+
+- Fix: verify now reports each error position once instead of once per check.
+- Fix: normalised ledger error reasons across missing, corrupt and tampered entries.
+- Examples: added a `vault-server` example with two releases for the launch demo.
+
+## 0.1.2 / 0.1.3
+
+- Packaging, readme and test-count polish.
+
 ## 0.1.0
 
 First release.
