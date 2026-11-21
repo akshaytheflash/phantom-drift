@@ -392,6 +392,9 @@ export function classifyChanges(
   const reintroduced = continuationMatches(current, options.tainted ?? [], options.baseline ?? []);
 
   const severity = changes.reduce<Severity>((acc, change) => maxSeverity(acc, change.severity), "none");
+  // A continuation is a rewriting-level finding on its own: the payload returned
+  // even when nothing else about the surfaces looks like a rewrite.
+  const severityAll = reintroduced.length > 0 ? maxSeverity(severity, "rewriting") : severity;
   const changeClass = decideClass(changes, markerNotes, reintroduced);
   const summary = summarise(changeClass, changes, reintroduced);
 
@@ -401,7 +404,7 @@ export function classifyChanges(
     toFingerprint: current.fingerprint,
     previousFingerprint: observationKey(previous),
     changeClass,
-    severity,
+    severity: severityAll,
     markers: markerNotes,
     sources: changes,
     reintroduced,
